@@ -102,6 +102,7 @@
       }
       if (cur_pos < 300) {
         $(".nav-menu ul:first li:first").addClass('active');
+
       }
     });
   });
@@ -110,12 +111,15 @@
   $(window).scroll(function() {
     if ($(this).scrollTop() > 100) {
       $('#header').addClass('header-scrolled');
+      document.getElementById ("fab-phone").innerText = ''
     } else {
       $('#header').removeClass('header-scrolled');
+      document.getElementById ("fab-phone").innerText = ' +91 91496 43257'
     }
   });
 
   if ($(window).scrollTop() > 100) {
+    $ ('.fab-phone').innerText = ''
     $('#header').addClass('header-scrolled');
   }
 
