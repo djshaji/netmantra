@@ -24,5 +24,6 @@ function submit () {
     captcha = document.getElementById ("captcha")
     captcha.message = data // ("message", data)
     console.log (data)
+    alert ('s')
     captcha.classList.remove ('d-none')
 }

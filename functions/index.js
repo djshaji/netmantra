@@ -1,5 +1,9 @@
 const functions = require('firebase-functions');
-const rp = require('request-promise')
+const rp = require('request-promise');
+const { ref } = require('firebase-functions/lib/providers/database');
+const admin = require('firebase-admin');
+admin.initializeApp();
+var db = admin.firestore();
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -18,13 +22,26 @@ exports.checkRecaptcha = functions.https.onRequest((req, res) => {
             response: response
         },
         json: true
-    }).then(result => {
+    }).then(async  result =>  {
         console.log("recaptcha result", result)
         if (result.success) {
-            res.send("You're good to go, human.")
+            document = db.collection ("messages").doc (req.query.email)
+            await document.set (req.query)
+            res.send(" \
+                <script>\
+                alert ('Message Submitted');\
+                location.href='/index.html';\
+                </script>\
+            ")
+
         }
         else {
-            res.send("Recaptcha verification failed. Are you a robot?" + req.query)
+            res.send(" \
+            <script>\
+            alert ('Could not send message')\
+            </script>\
+        ")
+    //    res.send("Recaptcha verification failed. Are you a robot?" + req.query)
         }
     }).catch(reason => {
         console.log("Recaptcha request failure", reason)
